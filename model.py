@@ -125,6 +125,8 @@ def format_all_examples(examples):
     return op
 
 # Step 12 - build_text_dataset
+from datasets import Dataset
+
 def build_text_dataset(texts):
     """Wrap a list of training strings in a HF Dataset with a 'text' column."""
     # TODO: return a datasets.Dataset with one 'text' column holding the given strings
@@ -159,8 +161,22 @@ def build_training_arguments(output_dir='./sft_out', max_steps=5, learning_rate=
         optim="adamw_8bit",
     )
 
-# Step 16 - build_sft_trainer (not yet solved)
-# TODO: implement
+# Step 16 - build_sft_trainer
+from trl import SFTTrainer
+
+
+def build_sft_trainer(model, tokenizer, dataset, training_args, max_seq_length=256):
+    """Construct a trl SFTTrainer over dataset['text'] ready to .train()."""
+    # TODO: wire model, tokenizer, dataset, and training_args into an SFTTrainer
+    return SFTTrainer(
+        model=model,
+        tokenizer=tokenizer,
+        train_dataset=dataset,
+        dataset_text_field="text",
+        max_seq_length=max_seq_length,
+        args=training_args,
+        packing=False
+    )
 
 # Step 17 - run_sft_training (not yet solved)
 # TODO: implement
